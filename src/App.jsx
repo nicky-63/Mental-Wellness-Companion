@@ -1,7 +1,20 @@
 import React from 'react';
 import { initializeApp } from 'firebase/app';
-import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from 'firebase/auth';
-import { getFirestore, collection, addDoc, query, onSnapshot, doc, setDoc, getDoc, orderBy, serverTimestamp, where, getDocs, deleteDoc } from 'firebase/firestore';
+import { getAuth, signInAnonymously, onAuthStateChanged } from 'firebase/auth';
+import { getFirestore, collection, addDoc, query, onSnapshot, doc, setDoc, orderBy, serverTimestamp, deleteDoc } from 'firebase/firestore';
+
+// --- IMPORTANT: PASTE YOUR FIREBASE CONFIG HERE ---
+// Replace this entire object with the one you got from Firebase
+const firebaseConfig = {
+  apiKey: "PASTE_YOUR_API_KEY_HERE",
+  authDomain: "PASTE_YOUR_AUTH_DOMAIN_HERE",
+  projectId: "PASTE_YOUR_PROJECT_ID_HERE",
+  storageBucket: "PASTE_YOUR_STORAGE_BUCKET_HERE",
+  messagingSenderId: "PASTE_YOUR_MESSAGING_SENDER_ID_HERE",
+  appId: "PASTE_YOUR_APP_ID_HERE",
+  measurementId: "PASTE_YOUR_MEASUREMENT_ID_HERE"
+};
+// --- END OF CONFIGURATION ---
 
 // --- Static Data ---
 const resources = [
@@ -66,7 +79,15 @@ const useFirebase = () => {
     
     React.useEffect(() => {
         try {
-            const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+            // Check if the user has replaced the placeholder API keys
+            if (firebaseConfig.apiKey.includes("PASTE_YOUR_API_KEY_HERE")) {
+                console.error("FIREBASE CONFIGURATION ERROR: Please replace the placeholder values in the 'firebaseConfig' object at the top of src/App.jsx with your actual keys from your Firebase project console.");
+                // Prevent the app from trying to initialize Firebase with invalid keys
+                setIsAuthReady(false); // Keep the app in a "connecting" state
+                return;
+            }
+
+            // We now use the config object directly from the code above
             const app = initializeApp(firebaseConfig);
             const authInstance = getAuth(app);
             const dbInstance = getFirestore(app);
@@ -78,11 +99,8 @@ const useFirebase = () => {
                     setUserId(user.uid);
                 } else {
                      try {
-                        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                            await signInWithCustomToken(authInstance, __initial_auth_token);
-                        } else {
-                            await signInAnonymously(authInstance);
-                        }
+                        // For this hackathon version, we'll just sign in anonymously
+                        await signInAnonymously(authInstance);
                     } catch (error) {
                         console.error("Error signing in:", error);
                     }
@@ -207,7 +225,7 @@ const Chatbot = ({ db, userId, isAuthReady }) => {
 const MoodLog = ({ db, userId, isAuthReady }) => {
     const [moodData, setMoodData] = React.useState({});
     const [selectedDate, setSelectedDate] = React.useState(new Date());
-    const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+    const appId = "mental-wellness-hackathon"; // A simple identifier
 
     React.useEffect(() => {
         if (isAuthReady && db && userId) {
@@ -297,7 +315,7 @@ const Journal = ({ db, userId, isAuthReady }) => {
     const [entryToDelete, setEntryToDelete] = React.useState(null);
     const [analysis, setAnalysis] = React.useState('');
     const [isAnalyzing, setIsAnalyzing] = React.useState(false);
-    const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+    const appId = "mental-wellness-hackathon"; // A simple identifier
 
     React.useEffect(() => {
         if (isAuthReady && db && userId) {
@@ -489,7 +507,16 @@ export default function App() {
 
     const renderContent = () => {
         if (!isAuthReady) {
-            return <div className="flex items-center justify-center h-full"><p>Connecting securely...</p></div>
+            return (
+                <div className="flex items-center justify-center h-full bg-white rounded-2xl shadow-lg">
+                    <div className="text-center p-8">
+                        <h2 className="text-xl font-semibold text-gray-700 mb-2">Connecting...</h2>
+                        <p className="text-gray-500">
+                            If this is taking a while, please check the developer console for a `FIREBASE CONFIGURATION ERROR` message.
+                        </p>
+                    </div>
+                </div>
+            );
         }
         switch (activeTab) {
             case 'chat': return <Chatbot db={db} userId={userId} isAuthReady={isAuthReady} />;
@@ -514,5 +541,7 @@ export default function App() {
         </div>
     );
 }
+
+
 
 
