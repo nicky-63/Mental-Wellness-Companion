@@ -6,13 +6,13 @@ import { getFirestore, collection, addDoc, query, onSnapshot, doc, setDoc, order
 // --- IMPORTANT: PASTE YOUR FIREBASE CONFIG HERE ---
 // Replace this entire object with the one you got from Firebase
 const firebaseConfig = {
-  apiKey: "PASTE_YOUR_API_KEY_HERE",
-  authDomain: "PASTE_YOUR_AUTH_DOMAIN_HERE",
-  projectId: "PASTE_YOUR_PROJECT_ID_HERE",
-  storageBucket: "PASTE_YOUR_STORAGE_BUCKET_HERE",
-  messagingSenderId: "PASTE_YOUR_MESSAGING_SENDER_ID_HERE",
-  appId: "PASTE_YOUR_APP_ID_HERE",
-  measurementId: "PASTE_YOUR_MEASUREMENT_ID_HERE"
+  apiKey: "AIzaSyASnGWli-x2igbJtfHTf0DaqsBoSeo4Pp8",
+  authDomain: "mental-wellness-companio-359f2.firebaseapp.com",
+  projectId: "mental-wellness-companio-359f2",
+  storageBucket: "mental-wellness-companio-359f2.firebasestorage.app",
+  messagingSenderId: "99717597896",
+  appId: "1:99717597896:web:4f5c8e7a842312685c33fd",
+  measurementId: "G-M6C48X49G7"
 };
 // --- END OF CONFIGURATION ---
 
