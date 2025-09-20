@@ -128,11 +128,11 @@ const User = ({ className }) => (<svg xmlns="http://www.w3.org/2000/svg" width="
 const Sparkles = ({ className }) => (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m12 3-1.9 5.8-5.8 1.9 5.8 1.9 1.9 5.8 1.9-5.8 5.8-1.9-5.8-1.9z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>);
 
 const moods = {
-  happy: { emoji: '😊', label: 'Happy', color: 'bg-green-100 text-green-800' },
-  calm: { emoji: '😌', label: 'Calm', color: 'bg-blue-100 text-blue-800' },
-  sad: { emoji: '😢', label: 'Sad', color: 'bg-indigo-100 text-indigo-800' },
-  anxious: { emoji: '😟', label: 'Anxious', color: 'bg-yellow-100 text-yellow-800' },
-  angry: { emoji: '😠', label: 'Angry', color: 'bg-red-100 text-red-800' },
+  happy: { emoji: '😊', label: 'Happy', color: 'bg-green-100 text-green-800 border-green-200' },
+  calm: { emoji: '😌', label: 'Calm', color: 'bg-sky-100 text-sky-800 border-sky-200' },
+  sad: { emoji: '😢', label: 'Sad', color: 'bg-indigo-100 text-indigo-800 border-indigo-200' },
+  anxious: { emoji: '😟', label: 'Anxious', color: 'bg-yellow-100 text-yellow-800 border-yellow-200' },
+  angry: { emoji: '😠', label: 'Angry', color: 'bg-red-100 text-red-800 border-red-200' },
 };
 
 // --- App Components ---
@@ -171,7 +171,7 @@ const Chatbot = ({ db, userId, isAuthReady }) => {
 - Keep your responses concise and easy to read. Use short paragraphs.
 - End your messages with a gentle, open-ended question to encourage them to continue the conversation.`;
             
-            const apiKey = "AIzaSyAttoi7RF50jBTnBYHSqpgIbKzPsRx0ZME";
+            const apiKey = "AIzaSyAttoi7RF50jBTnBYHSqpgIbKzPsRx0ZME"; // IMPORTANT: Remember to paste your Gemini API key here
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
 
             const payload = {
@@ -194,28 +194,28 @@ const Chatbot = ({ db, userId, isAuthReady }) => {
     };
     
     return (
-        <div className="flex flex-col h-full bg-white rounded-2xl shadow-lg overflow-hidden">
-            <div className="p-4 border-b bg-gray-50"><h2 className="text-xl font-bold text-gray-800">Chat with Kai</h2><p className="text-sm text-gray-500">Your friendly AI companion</p></div>
-            <div className="flex-1 p-4 overflow-y-auto space-y-4">
+        <div className="flex flex-col h-full bg-white rounded-2xl shadow-lg overflow-hidden border border-slate-200">
+            <div className="p-4 border-b bg-slate-50"><h2 className="text-xl font-bold text-slate-800">Chat with Kai</h2><p className="text-sm text-slate-500">Your friendly AI companion</p></div>
+            <div className="flex-1 p-6 overflow-y-auto space-y-6 bg-slate-50/50">
                 {messages.map((msg, index) => (
-                    <div key={index} className={`flex items-start gap-3 ${msg.role === 'user' ? 'justify-end' : ''}`}>
-                        {msg.role === 'model' && <div className="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-500 text-white flex items-center justify-center"><Bot className="w-5 h-5"/></div>}
-                        <div className={`max-w-xs md:max-w-md p-3 rounded-2xl ${msg.role === 'user' ? 'bg-blue-500 text-white rounded-br-none' : 'bg-gray-200 text-gray-800 rounded-bl-none'}`}><p className="text-sm whitespace-pre-wrap">{msg.text}</p></div>
-                         {msg.role === 'user' && <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center"><User className="w-5 h-5"/></div>}
+                    <div key={index} className={`flex items-start gap-4 ${msg.role === 'user' ? 'justify-end' : ''}`}>
+                        {msg.role === 'model' && <div className="flex-shrink-0 w-10 h-10 rounded-full bg-teal-500 text-white flex items-center justify-center shadow-md"><Bot className="w-6 h-6"/></div>}
+                        <div className={`max-w-xs md:max-w-md p-4 rounded-2xl shadow-sm ${msg.role === 'user' ? 'bg-gradient-to-br from-cyan-500 to-teal-500 text-white rounded-br-none' : 'bg-white text-slate-800 rounded-bl-none border border-slate-200'}`}><p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.text}</p></div>
+                         {msg.role === 'user' && <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500 to-teal-500 text-white flex items-center justify-center shadow-md"><User className="w-6 h-6"/></div>}
                     </div>
                 ))}
                 {loading && (
-                     <div className="flex items-start gap-3">
-                        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-500 text-white flex items-center justify-center"><Bot className="w-5 h-5"/></div>
-                        <div className="p-3 rounded-2xl bg-gray-200"><div className="flex items-center space-x-1"><span className="w-2 h-2 bg-indigo-400 rounded-full animate-pulse"></span><span className="w-2 h-2 bg-indigo-400 rounded-full animate-pulse delay-150"></span><span className="w-2 h-2 bg-indigo-400 rounded-full animate-pulse delay-300"></span></div></div>
+                     <div className="flex items-start gap-4">
+                        <div className="flex-shrink-0 w-10 h-10 rounded-full bg-teal-500 text-white flex items-center justify-center shadow-md"><Bot className="w-6 h-6"/></div>
+                        <div className="p-4 rounded-2xl bg-white border border-slate-200"><div className="flex items-center space-x-2"><span className="w-2.5 h-2.5 bg-teal-400 rounded-full animate-pulse"></span><span className="w-2.5 h-2.5 bg-teal-400 rounded-full animate-pulse [animation-delay:0.2s]"></span><span className="w-2.5 h-2.5 bg-teal-400 rounded-full animate-pulse [animation-delay:0.4s]"></span></div></div>
                     </div>
                 )}
                 <div ref={messagesEndRef} />
             </div>
-            <div className="p-4 border-t bg-gray-50">
-                <div className="flex items-center space-x-2">
-                    <input type="text" value={input} onChange={(e) => setInput(e.target.value)} onKeyPress={(e) => e.key === 'Enter' && sendMessage()} placeholder="Type your message here..." className="w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-400 transition" disabled={loading}/>
-                    <button onClick={sendMessage} disabled={loading} className="p-3 rounded-full bg-indigo-500 text-white hover:bg-indigo-600 disabled:bg-indigo-300 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400"><Send className="w-5 h-5" /></button>
+            <div className="p-4 border-t bg-slate-50">
+                <div className="flex items-center space-x-3">
+                    <input type="text" value={input} onChange={(e) => setInput(e.target.value)} onKeyPress={(e) => e.key === 'Enter' && sendMessage()} placeholder="Type your message..." className="w-full px-4 py-3 border border-slate-300 rounded-full focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-shadow shadow-sm" disabled={loading}/>
+                    <button onClick={sendMessage} disabled={loading} className="p-3 rounded-full bg-teal-500 text-white hover:bg-teal-600 disabled:bg-teal-300 transition-all transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 shadow-lg"><Send className="w-6 h-6" /></button>
                 </div>
             </div>
         </div>
@@ -261,8 +261,8 @@ const MoodLog = ({ db, userId, isAuthReady }) => {
             const isSelected = selectedDate.toDateString() === date.toDateString();
 
             days.push(
-                <div key={day} onClick={() => setSelectedDate(date)} className={`p-1 text-center cursor-pointer border-2 rounded-lg transition-colors ${isSelected ? 'border-indigo-500' : 'border-transparent'}`}>
-                    <span className={`w-8 h-8 flex items-center justify-center rounded-full mx-auto ${moodEntry ? moods[moodEntry.mood].color : 'bg-gray-100'}`}>
+                <div key={day} onClick={() => setSelectedDate(date)} className={`p-1 text-center cursor-pointer border-2 rounded-lg transition-all transform hover:scale-105 ${isSelected ? 'border-cyan-500 bg-cyan-50' : 'border-transparent'}`}>
+                    <span className={`w-9 h-9 flex items-center justify-center rounded-full mx-auto font-medium text-slate-700 ${moodEntry ? `${moods[moodEntry.mood].color} border-2 ${moods[moodEntry.mood].border}` : 'bg-slate-100'}`}>
                         {moodEntry ? moods[moodEntry.mood].emoji : day}
                     </span>
                 </div>
@@ -272,21 +272,21 @@ const MoodLog = ({ db, userId, isAuthReady }) => {
     };
     
     return (
-        <div className="p-6 bg-white rounded-2xl shadow-lg h-full overflow-y-auto">
-             <h2 className="text-2xl font-bold text-gray-800 mb-2">Mood Log</h2><p className="text-gray-500 mb-6">Track your feelings one day at a time.</p>
-             <div className="bg-gray-50 p-4 rounded-xl">
+        <div className="p-6 bg-white rounded-2xl shadow-lg h-full overflow-y-auto border border-slate-200">
+             <h2 className="text-2xl font-bold text-slate-800 mb-2">Mood Log</h2><p className="text-slate-500 mb-6">Track your feelings one day at a time.</p>
+             <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
                 <div className="flex justify-between items-center mb-4">
-                    <button onClick={() => setSelectedDate(new Date(selectedDate.setMonth(selectedDate.getMonth() - 1)))} className="px-2 py-1 rounded-md hover:bg-gray-200">&lt;</button>
-                    <h3 className="font-semibold text-lg">{selectedDate.toLocaleString('default', { month: 'long', year: 'numeric' })}</h3>
-                    <button onClick={() => setSelectedDate(new Date(selectedDate.setMonth(selectedDate.getMonth() + 1)))} className="px-2 py-1 rounded-md hover:bg-gray-200">&gt;</button>
+                    <button onClick={() => setSelectedDate(new Date(selectedDate.setMonth(selectedDate.getMonth() - 1)))} className="px-2 py-1 rounded-md text-slate-600 hover:bg-slate-200 transition-colors">&lt;</button>
+                    <h3 className="font-semibold text-lg text-slate-700">{selectedDate.toLocaleString('default', { month: 'long', year: 'numeric' })}</h3>
+                    <button onClick={() => setSelectedDate(new Date(selectedDate.setMonth(selectedDate.getMonth() + 1)))} className="px-2 py-1 rounded-md text-slate-600 hover:bg-slate-200 transition-colors">&gt;</button>
                 </div>
-                <div className="grid grid-cols-7 gap-1 text-sm text-center text-gray-500 mb-2"><div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div></div>
-                <div className="grid grid-cols-7 gap-1">{renderCalendar()}</div>
+                <div className="grid grid-cols-7 gap-1 text-sm text-center text-slate-500 font-semibold mb-2"><div>S</div><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div></div>
+                <div className="grid grid-cols-7 gap-1.5">{renderCalendar()}</div>
              </div>
-             <div className="mt-6">
-                <h3 className="font-semibold text-lg mb-3">How are you feeling on {selectedDate.toLocaleDateString('default', { month: 'long', day: 'numeric' })}?</h3>
+             <div className="mt-8">
+                <h3 className="font-semibold text-lg mb-4 text-slate-700">How are you feeling on {selectedDate.toLocaleDateString('default', { month: 'long', day: 'numeric' })}?</h3>
                 <div className="flex flex-wrap gap-3">
-                    {Object.keys(moods).map(moodKey => (<button key={moodKey} onClick={() => handleMoodSelect(moodKey)} className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-transform transform hover:scale-105 ${moods[moodKey].color}`}><span>{moods[moodKey].emoji}</span><span>{moods[moodKey].label}</span></button>))}
+                    {Object.keys(moods).map(moodKey => (<button key={moodKey} onClick={() => handleMoodSelect(moodKey)} className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-transform transform hover:scale-110 hover:shadow-md border ${moods[moodKey].color} ${moods[moodKey].border}`}><span>{moods[moodKey].emoji}</span><span>{moods[moodKey].label}</span></button>))}
                 </div>
              </div>
         </div>
@@ -294,13 +294,13 @@ const MoodLog = ({ db, userId, isAuthReady }) => {
 };
 
 const DeleteConfirmationModal = ({ onConfirm, onCancel }) => (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div className="bg-white rounded-lg p-6 shadow-xl max-w-sm w-full mx-4">
-            <h3 className="text-lg font-bold text-gray-800">Delete Entry?</h3>
-            <p className="text-gray-600 mt-2">Are you sure? This action cannot be undone.</p>
+    <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 animate-fade-in">
+        <div className="bg-white rounded-lg p-6 shadow-xl max-w-sm w-full mx-4 transform transition-all animate-slide-up">
+            <h3 className="text-lg font-bold text-slate-800">Delete Entry?</h3>
+            <p className="text-slate-600 mt-2">Are you sure? This action cannot be undone.</p>
             <div className="flex justify-end gap-4 mt-6">
-                <button onClick={onCancel} className="px-4 py-2 rounded-lg text-gray-700 bg-gray-200 hover:bg-gray-300 transition">Cancel</button>
-                <button onClick={onConfirm} className="px-4 py-2 rounded-lg text-white bg-red-500 hover:bg-red-600 transition">Delete</button>
+                <button onClick={onCancel} className="px-4 py-2 rounded-lg text-slate-700 bg-slate-200 hover:bg-slate-300 transition-colors">Cancel</button>
+                <button onClick={onConfirm} className="px-4 py-2 rounded-lg text-white bg-red-500 hover:bg-red-600 transition-colors">Delete</button>
             </div>
         </div>
     </div>
@@ -368,7 +368,7 @@ const Journal = ({ db, userId, isAuthReady }) => {
 - Frame your response in a gentle, second-person perspective (e.g., "I noticed you often write about...").
 - Keep the tone warm and encouraging. Format the output with markdown for readability (e.g., use headings and bullet points).`;
 
-            const apiKey = "";
+            const apiKey = ""; // IMPORTANT: Remember to paste your Gemini API key here
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
             const payload = {
                 contents: [{ parts: [{ text: `Here are my journal entries:\n\n${journalContent}` }] }],
@@ -390,32 +390,32 @@ const Journal = ({ db, userId, isAuthReady }) => {
 
 
     return (
-        <div className="p-6 bg-white rounded-2xl shadow-lg h-full flex flex-col md:flex-row gap-6 overflow-hidden">
+        <div className="p-6 bg-white rounded-2xl shadow-lg h-full flex flex-col md:flex-row gap-6 overflow-hidden border border-slate-200">
             {isDeleteModalOpen && <DeleteConfirmationModal onConfirm={confirmDelete} onCancel={() => setIsDeleteModalOpen(false)} />}
-            <div className="w-full md:w-1/3 flex flex-col">
-                 <h2 className="text-2xl font-bold text-gray-800 mb-2">Journal</h2><p className="text-gray-500 mb-4">A safe space for your thoughts.</p>
-                 <button onClick={() => { setSelectedEntry(null); setCurrentEntry(''); }} className="w-full mb-2 px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-colors">+ New Entry</button>
-                 <button onClick={analyzeJournal} disabled={isAnalyzing || entries.length < 3} className="w-full mb-4 px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors disabled:bg-purple-300 flex items-center justify-center gap-2">
+            <div className="w-full md:w-1/3 flex flex-col min-w-0">
+                 <h2 className="text-2xl font-bold text-slate-800 mb-2">Journal</h2><p className="text-slate-500 mb-4">A safe space for your thoughts.</p>
+                 <button onClick={() => { setSelectedEntry(null); setCurrentEntry(''); setAnalysis('') }} className="w-full mb-2 px-4 py-2 bg-cyan-600 text-white font-semibold rounded-lg hover:bg-cyan-700 transition-colors shadow-sm">+ New Entry</button>
+                 <button onClick={analyzeJournal} disabled={isAnalyzing || entries.length < 3} className="w-full mb-4 px-4 py-2 bg-teal-600 text-white font-semibold rounded-lg hover:bg-teal-700 transition-colors disabled:bg-teal-300 flex items-center justify-center gap-2 shadow-sm">
                      <Sparkles className="w-5 h-5" /> {isAnalyzing ? 'Analyzing...' : 'Get AI Reflection'}
                  </button>
-                 <div className="flex-1 overflow-y-auto border-t border-gray-200 pt-4">
-                    {isLoading ? <p>Loading entries...</p> : entries.length > 0 ? (
-                        <ul className="space-y-2 pr-2">{entries.map(entry => (<li key={entry.id} onClick={() => { setSelectedEntry(entry); setCurrentEntry(entry.text); setAnalysis(''); }} className={`p-3 rounded-lg cursor-pointer transition-colors ${selectedEntry?.id === entry.id ? 'bg-indigo-100' : 'hover:bg-gray-100'}`}><p className="text-sm text-gray-600 truncate">{entry.text}</p><p className="text-xs text-gray-400 mt-1">{entry.timestamp?.toDate().toLocaleDateString()}</p></li>))}</ul>
-                     ) : <p className="text-sm text-gray-500">No entries yet. Start writing!</p>}
+                 <div className="flex-1 overflow-y-auto border-t border-slate-200 pt-4 -mr-2">
+                    {isLoading ? <p className="text-slate-500">Loading entries...</p> : entries.length > 0 ? (
+                        <ul className="space-y-2 pr-2">{entries.map(entry => (<li key={entry.id} onClick={() => { setSelectedEntry(entry); setCurrentEntry(entry.text); setAnalysis(''); }} className={`p-3 rounded-lg cursor-pointer transition-colors border-l-4 ${selectedEntry?.id === entry.id ? 'bg-cyan-50 border-cyan-500' : 'border-transparent hover:bg-slate-100'}`}><p className="font-medium text-slate-700 truncate">{entry.text}</p><p className="text-xs text-slate-400 mt-1">{entry.timestamp?.toDate().toLocaleDateString()}</p></li>))}</ul>
+                     ) : <p className="text-sm text-slate-500 p-3">No entries yet. Start writing!</p>}
                  </div>
             </div>
-            <div className="w-full md:w-2/3 flex flex-col border-l border-gray-200 pl-6">
+            <div className="w-full md:w-2/3 flex flex-col border-t md:border-t-0 md:border-l border-slate-200 pt-6 md:pt-0 md:pl-6">
                 {analysis ? (
-                    <div className="prose prose-sm h-full overflow-y-auto">
-                        <h3 className="font-bold text-lg mb-2">Your AI Reflection</h3>
-                        <div dangerouslySetInnerHTML={{ __html: analysis.replace(/\n/g, '<br />') }} />
+                    <div className="prose prose-sm prose-slate h-full overflow-y-auto">
+                        <h3 className="font-bold text-lg mb-2 text-slate-800">Your AI Reflection</h3>
+                        <div dangerouslySetInnerHTML={{ __html: analysis.replace(/\n/g, '<br />').replace(/### (.*)/g, '<h3 class="font-bold text-slate-700">$1</h3>').replace(/\* (.*)/g, '<li class="ml-4 list-disc">$1</li>') }} />
                     </div>
                 ) : (
                     <>
-                        <textarea value={currentEntry} onChange={(e) => setCurrentEntry(e.target.value)} placeholder="Write what's on your mind... Your thoughts are safe here." className="w-full h-full p-4 border border-gray-200 rounded-lg flex-1 focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none"></textarea>
+                        <textarea value={currentEntry} onChange={(e) => setCurrentEntry(e.target.value)} placeholder="Write what's on your mind... Your thoughts are safe here." className="w-full h-full p-4 bg-slate-50 border border-slate-200 rounded-lg flex-1 focus:outline-none focus:ring-2 focus:ring-cyan-400 resize-none transition"></textarea>
                         <div className="flex items-center mt-4">
-                            <button onClick={handleSave} className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">{selectedEntry ? 'Update Entry' : 'Save Entry'}</button>
-                            {selectedEntry && <button onClick={() => handleDeleteClick(selectedEntry.id)} className="ml-auto px-4 py-2 text-sm text-red-500 hover:bg-red-100 rounded-lg">Delete</button>}
+                            <button onClick={handleSave} className="px-6 py-2 bg-teal-500 text-white font-semibold rounded-lg hover:bg-teal-600 transition-colors shadow-sm">{selectedEntry ? 'Update Entry' : 'Save Entry'}</button>
+                            {selectedEntry && <button onClick={() => handleDeleteClick(selectedEntry.id)} className="ml-auto px-4 py-2 text-sm text-red-500 hover:bg-red-100 rounded-lg transition-colors font-medium">Delete</button>}
                         </div>
                     </>
                 )}
@@ -451,21 +451,21 @@ const BreathingVisualizer = () => {
     const animationClass = mode === 'running' ? 'animate-box-breathing' : '';
 
     return (
-        <div className="flex flex-col items-center justify-center p-4 rounded-lg bg-indigo-50 text-center">
+        <div className="flex flex-col items-center justify-center p-4 rounded-lg bg-cyan-50 text-center border border-cyan-100">
             <style>{`
                 @keyframes box-breathing {
-                    0%, 100% { transform: scale(0.5); background-color: #a5b4fc; } /* Inhale Start / Cycle End */
-                    25% { transform: scale(1); background-color: #818cf8; } /* Inhale End / Hold Start */
-                    50% { transform: scale(1); background-color: #818cf8; } /* Hold End / Exhale Start */
-                    75% { transform: scale(0.5); background-color: #a5b4fc; } /* Exhale End / Hold Empty Start */
+                    0%, 100% { transform: scale(0.6); background-color: #67e8f9; } /* Inhale Start / Cycle End */
+                    25% { transform: scale(1); background-color: #22d3ee; } /* Inhale End / Hold Start */
+                    50% { transform: scale(1); background-color: #22d3ee; } /* Hold End / Exhale Start */
+                    75% { transform: scale(0.6); background-color: #67e8f9; } /* Exhale End / Hold Empty Start */
                 }
                 .animate-box-breathing {
-                    animation: box-breathing 16s infinite ease-in-out;
+                    animation: box-breathing 16s infinite cubic-bezier(0.45, 0, 0.55, 1);
                 }
             `}</style>
-            <div onClick={handleClick} className="w-40 h-40 cursor-pointer rounded-lg bg-indigo-300 flex items-center justify-center transition-all duration-500" style={{ transform: mode !== 'running' ? 'scale(0.75)' : '' }}>
-                <div className={`w-full h-full rounded-lg flex items-center justify-center ${animationClass}`}>
-                    <span className="text-white font-semibold text-lg">{text}</span>
+            <div onClick={handleClick} className="w-44 h-44 cursor-pointer rounded-full bg-cyan-200 flex items-center justify-center transition-all duration-500 shadow-inner" style={{ transform: mode !== 'running' ? 'scale(0.85)' : '' }}>
+                <div className={`w-full h-full rounded-full flex items-center justify-center ${animationClass}`}>
+                    <span className="text-white font-semibold text-xl drop-shadow-md">{text}</span>
                 </div>
             </div>
         </div>
@@ -474,25 +474,25 @@ const BreathingVisualizer = () => {
 
 const Resources = () => {
   return (
-    <div className="p-6 bg-white rounded-2xl shadow-lg h-full overflow-y-auto">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">Helpful Resources & Techniques</h2>
+    <div className="p-6 bg-white rounded-2xl shadow-lg h-full overflow-y-auto border border-slate-200">
+      <h2 className="text-2xl font-bold text-slate-800 mb-6">Helpful Resources & Techniques</h2>
       <div className="mb-8">
-        <h3 className="text-xl font-semibold text-gray-700 mb-4 border-b-2 border-indigo-200 pb-2">Coping Techniques</h3>
+        <h3 className="text-xl font-semibold text-slate-700 mb-4 border-b-2 border-cyan-200 pb-2">Coping Techniques</h3>
         <div className="space-y-4">
           {techniques.map((tech) => (
-            <div key={tech.title} className="p-4 bg-gray-50 rounded-lg">
-              <h4 className="font-bold text-indigo-700">{tech.title}</h4>
-              <p className="text-gray-600 mt-1 mb-3">{tech.description}</p>
+            <div key={tech.title} className="p-4 bg-slate-50 rounded-lg border border-slate-200">
+              <h4 className="font-bold text-cyan-800">{tech.title}</h4>
+              <p className="text-slate-600 mt-1 mb-3 text-sm leading-relaxed">{tech.description}</p>
               {tech.component === 'BreathingVisualizer' && <BreathingVisualizer />}
-              {tech.steps && <ul className="list-disc list-inside space-y-1 text-sm text-gray-500">{tech.steps.map((step, i) => <li key={i}>{step}</li>)}</ul>}
+              {tech.steps && <ul className="list-disc list-inside space-y-1 text-sm text-slate-500">{tech.steps.map((step, i) => <li key={i}>{step}</li>)}</ul>}
             </div>
           ))}
         </div>
       </div>
       <div>
-        <h3 className="text-xl font-semibold text-gray-700 mb-4 border-b-2 border-green-200 pb-2">Helpful Websites</h3>
+        <h3 className="text-xl font-semibold text-slate-700 mb-4 border-b-2 border-teal-200 pb-2">Helpful Websites</h3>
         <div className="space-y-4">
-          {resources.map((res) => (<div key={res.title} className="p-4 bg-gray-50 rounded-lg"><h4 className="font-bold text-green-700">{res.title}</h4><p className="text-gray-600 my-1">{res.description}</p><a href={res.link} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-500 hover:underline">Visit Website &rarr;</a></div>))}
+          {resources.map((res) => (<div key={res.title} className="p-4 bg-slate-50 rounded-lg border border-slate-200"><h4 className="font-bold text-teal-800">{res.title}</h4><p className="text-slate-600 my-1 text-sm leading-relaxed">{res.description}</p><a href={res.link} target="_blank" rel="noopener noreferrer" className="text-sm text-cyan-600 hover:underline font-semibold">Visit Website &rarr;</a></div>))}
         </div>
       </div>
     </div>
@@ -508,10 +508,10 @@ export default function App() {
     const renderContent = () => {
         if (!isAuthReady) {
             return (
-                <div className="flex items-center justify-center h-full bg-white rounded-2xl shadow-lg">
+                <div className="flex items-center justify-center h-full bg-white rounded-2xl shadow-lg border border-slate-200">
                     <div className="text-center p-8">
-                        <h2 className="text-xl font-semibold text-gray-700 mb-2">Connecting...</h2>
-                        <p className="text-gray-500">
+                        <h2 className="text-xl font-semibold text-slate-700 mb-2">Connecting securely...</h2>
+                        <p className="text-slate-500">
                             If this is taking a while, please check the developer console for a `FIREBASE CONFIGURATION ERROR` message.
                         </p>
                     </div>
@@ -528,19 +528,27 @@ export default function App() {
     };
     
     return (
-        <div className="bg-gray-100 font-sans w-screen h-screen flex flex-col antialiased">
-           <header className="p-4 bg-white border-b border-gray-200"><div className="max-w-6xl mx-auto flex items-center"><HeartHandshake className="w-8 h-8 text-indigo-500 mr-3" /><h1 className="text-2xl font-bold text-gray-800">Mental Wellness Companion</h1></div></header>
-            <div className="flex-1 flex max-w-6xl w-full mx-auto p-4 gap-4 overflow-hidden">
-                <nav className="w-20 md:w-56 bg-white rounded-2xl shadow-lg p-4 flex flex-col">
-                    {navItems.map(item => (<button key={item.id} onClick={() => setActiveTab(item.id)} className={`flex items-center p-3 my-1 w-full text-left rounded-lg transition-colors ${activeTab === item.id ? 'bg-indigo-500 text-white' : 'text-gray-600 hover:bg-gray-100'}`}><item.icon className="w-6 h-6" /><span className="ml-4 hidden md:inline">{item.label}</span></button>))}
+        <div className="bg-slate-100 font-sans w-screen h-screen flex flex-col antialiased">
+           <header className="p-4 bg-white/80 backdrop-blur-sm border-b border-slate-200 sticky top-0 z-10"><div className="max-w-7xl mx-auto flex items-center"><HeartHandshake className="w-8 h-8 text-cyan-600 mr-3" /><h1 className="text-2xl font-bold text-slate-800">Mental Wellness Companion</h1></div></header>
+            <div className="flex-1 flex max-w-7xl w-full mx-auto p-4 gap-6 overflow-hidden">
+                <nav className="w-20 md:w-60 bg-white rounded-2xl shadow-lg p-4 flex flex-col border border-slate-200">
+                    {navItems.map(item => (<button key={item.id} onClick={() => setActiveTab(item.id)} className={`flex items-center p-3 my-1 w-full text-left rounded-lg transition-all duration-200 font-semibold ${activeTab === item.id ? 'bg-cyan-600 text-white shadow-md' : 'text-slate-600 hover:bg-cyan-50 hover:text-cyan-700'}`}><item.icon className="w-6 h-6" /><span className="ml-4 hidden md:inline">{item.label}</span></button>))}
                 </nav>
-                <main className="flex-1">
+                <main className="flex-1 min-w-0">
                     {renderContent()}
                 </main>
             </div>
+             <style>{`
+                @keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
+                @keyframes slide-up { 0% { transform: translateY(20px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+                .animate-fade-in { animation: fade-in 0.3s ease-out; }
+                .animate-slide-up { animation: slide-up 0.3s ease-out; }
+            `}</style>
         </div>
     );
 }
+
+
 
 
 
